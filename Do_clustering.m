@@ -336,6 +336,7 @@ if make_plots
 
          start = 3 * (fnum -1);
          for i = 1 + start: min(max(classes), 3 + start)%1:min(max(classes),3)
+         %for i = 1:n
              class = find(classes==i);
 %             subplot(3,5,6); 
 %                 max_spikes=min(length(class),par.max_spikes_plot);
@@ -364,14 +365,14 @@ if make_plots
 	    
 	    key = 'channel';
 	    index = strfind(filename, key); %gives beginning of word channel
-	    d = strfind(filename, '.'); %gives position of .mat 
+	    d = strfind(filename, 'channel'); %gives position of .mat 
 	    
             plot(spikes(class(1:max_spikes),:)','color',color(mod(i-1,maxc)+1,:)); 
             plot(mean(spikes(class,:),1),'k','linewidth',2)
             xlim([1 size(spikes,2)]); 
-            title(['Channel' filename(index+6:d) 'Cluster ' num2str(i) ': # ' num2str(length(class)) ' (' num2str(nnz(classes(:)==i & ~forced(:))) ')'],'Fontweight','bold')
+            title(['Channel' filename(index:end) 'Cluster ' num2str(i) ': # ' num2str(length(class)) ' (' num2str(nnz(classes(:)==i & ~forced(:))) ')'],'Fontweight','bold')
             ylimit = [ylimit;ylim];
-            print(indiv_fig,'-dpng',['cluster_' filename(index+6:d) '_' num2str(i) '.png'],resolution);
+            print(indiv_fig,'-dpng',[filename(index:end) '_' 'cluster_' num2str(i) '.png'],resolution);
             
         end
 
@@ -401,8 +402,8 @@ if make_plots
         fclose(fout);
 
 
-
-%         if par.print2file;
+% 
+%         if par.print2file
 %             %print(curr_fig,'-dpng',['fig2print_' filename '_' num2str(fnum) '.png'],resolution);
 %         else
 %             %print
