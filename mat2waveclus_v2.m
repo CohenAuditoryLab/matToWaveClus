@@ -1,7 +1,7 @@
 function mat2waveclus_v2(pathbin,filename,number_channels)
 % handle slashes
 if nargin<3
-    number_channels=192; 
+    number_channels=192;
 end
 if nargin<2
     [filename,pathbin,~] = uigetfile('*.dat');
@@ -19,21 +19,13 @@ param.segments_length = 10;
 param.to_plot_std = 2;
 param.detect_fmax = 7000;
 
-% %select path for data
-% disp('Select the path for your .dat binary file'); Given in selectfile
-% pathbin = uigetdir();
-%cd(path);
-
-data_directory = [pathbin 'wave_clus_output'];
-if 7~=exist(data_directory, 'dir') 
-    mkdir(data_directory); 
+%select directory to save all the files
+savepath = uigetdir();
+data_directory = [savepath slash 'wave_clus_output'];
+if 7~=exist(data_directory, 'dir')
+    mkdir(data_directory);
 end
-%cd(data_directory);
 
-%select path for wave_clus
-disp('Select the path for wave_clus'); %this one could be hardcoded?
-waveclus = uigetdir();
-addpath(genpath(waveclus));
 %define matrix for storing all outputs
 allClusters = cell(1,number_channels);
 cd(data_directory);
@@ -59,7 +51,7 @@ for n=1:number_channels
     load(strcat('times_', name, ext));
     %add clustering results to all matrix
     allClusters{n} = cluster_class;
-    clear data name 
+    clear data name
 end
 disp('Saving final data matrix...');
 save(strcat('clusters_', filename), 'allClusters');

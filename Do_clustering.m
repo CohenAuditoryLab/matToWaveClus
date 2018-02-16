@@ -357,7 +357,7 @@ if make_plots
 %             title([num2str(nnz(xa<3)) ' in < 3ms']);
     
             indiv_fig = figure('Visible', 'off');
-            max_spikes=min(length(class),par.max_spikes_plot);
+            max_spikes=length(class);
             plot(spikes(class(1:max_spikes),:)','color',color(mod(i-1,maxc)+1,:)); 
             xlim([1 size(spikes,2)]);
             hold on;
@@ -402,11 +402,11 @@ if make_plots
 
 
 
-        if par.print2file;
-            %print(curr_fig,'-dpng',['fig2print_' filename '_' num2str(fnum) '.png'],resolution);
-        else
-            %print
-        end 
+%         if par.print2file;
+%             %print(curr_fig,'-dpng',['fig2print_' filename '_' num2str(fnum) '.png'],resolution);
+%         else
+%             %print
+%         end 
         fprintf('%d ',fnum);
     end
     close(curr_fig)
